@@ -26,7 +26,7 @@ const defaultDuration = Duration(milliseconds: 250);
 
 
 class NetworkConstants{
-  //urls
+  //base url
   static const BASE_URL = "https://bd.ezassist.me/ws/mpFeed?instanceName=bd.ezassist.me&opt=";
 
   //header parameters
@@ -39,5 +39,9 @@ class NetworkConstants{
 
   //End Urls
   static const TRENDING_SELLER = "trending_seller";
+  static const STORIES = "stories";
+  static const NEW_SHOPS = "newShops";
+  static const NEW_ARRIVALS = "newArrivals";
+  static const TRENDING_PRODUCTS = "trendingProducts";
 
 }
