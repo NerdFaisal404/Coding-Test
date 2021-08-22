@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:coding_test/utils/constant/constant.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flutter/cupertino.dart';
 import '../failure/exceptions/network_exception.dart';
 
 import 'dio_factory.dart';
 
 class ApiBaseHelper {
-
   final DioFactory? dioFactory;
 
   ApiBaseHelper({@required this.dioFactory});
@@ -17,23 +17,23 @@ class ApiBaseHelper {
     try {
       // make the network call
       final response = await dioFactory?.getDio().get(
-          NetworkConstants.BASE_URL + endUrl);
+            NetworkConstants.BASE_URL + endUrl,
+            options: buildCacheOptions(Duration(days: 7)),
+          );
       //return the response
-      return _returnResponse(response);
+      return _returnResponse(response!);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
   }
 
-  Future<Response> getWithParams(String endUrl,
-      Map<String, dynamic> params) async {
-
+  Future<Response> getWithParams(
+      String endUrl, Map<String, dynamic> params) async {
     try {
       // make the network call
-      final response = await dioFactory!.getDio().get(
-          NetworkConstants.BASE_URL + endUrl,
-          queryParameters: params
-      );
+      final response = await dioFactory!
+          .getDio()
+          .get(NetworkConstants.BASE_URL + endUrl, queryParameters: params);
       //return the response
       return _returnResponse(response);
     } on SocketException {
@@ -41,10 +41,10 @@ class ApiBaseHelper {
     }
   }
 
-  Response _returnResponse(Response? response) {
-    switch (response!.statusCode) {
+  Response _returnResponse(Response response) {
+    switch (response.statusCode) {
       case 200:
-        return response!;
+        return response;
       case 400:
         throw BadRequestException(response.data.toString());
       case 401:
@@ -58,6 +58,3 @@ class ApiBaseHelper {
     }
   }
 }
-
-
-

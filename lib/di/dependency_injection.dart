@@ -1,8 +1,8 @@
 import 'package:coding_test/core/network/network_info.dart';
 import 'package:coding_test/data/datasources/remote_datasource/remote_datasource.dart';
 import 'package:coding_test/data/datasources/remote_datasource/remote_datasource_impl.dart';
-import 'package:coding_test/data/repositorie/repository.dart';
-import 'package:coding_test/data/repositorie/repository_impl.dart';
+import 'package:coding_test/data/repositories/repository.dart';
+import 'package:coding_test/data/repositories/repository_impl.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../core/network/api_base_helper.dart';

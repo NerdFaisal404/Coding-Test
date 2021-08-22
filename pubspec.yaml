@@ -29,7 +29,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   # Dio for http connection
-  dio: ^4.0.0
+  dio_http_cache: ^0.3.0
   # Data connection checker
   internet_connection_checker: ^0.0.1+2
   # Bloc for state management
@@ -67,10 +67,10 @@ flutter:
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
 
-  fonts:
-    - family: Roboto
-      fonts:
-        - asset: assets/fonts/Roboto-Regular.ttf
-        - asset: fonts/Roboto-Light.ttf
-        - asset: fonts/Roboto-Bold.ttf
-        - asset: fonts/Roboto-Italic.ttf
+#  fonts:
+#    - family: Roboto
+#      fonts:
+#        - asset: assets/fonts/Roboto-Regular.ttf
+#        - asset: fonts/Roboto-Light.ttf
+#        - asset: fonts/Roboto-Bold.ttf
+#        - asset: fonts/Roboto-Italic.ttf
