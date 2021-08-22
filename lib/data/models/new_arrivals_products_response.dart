@@ -26,7 +26,7 @@ class NewArrivalsProductsResponse {
     this.sellerName,
     this.sellerProfilePhoto,
     this.sellerCoverPhoto,
-    this.ezShopName,
+    this.shopName,
     this.defaultPushScore,
     this.myProductVarId,
   });
@@ -44,10 +44,10 @@ class NewArrivalsProductsResponse {
   int? discountAmount;
   int? unitPrice;
   String? productImage;
-  SellerName? sellerName;
+  String? sellerName;
   String? sellerProfilePhoto;
   String? sellerCoverPhoto;
-  EzShopName? ezShopName;
+  String? shopName;
   int? defaultPushScore;
   String? myProductVarId;
 
@@ -65,10 +65,10 @@ class NewArrivalsProductsResponse {
     discountAmount: json["discountAmount"],
     unitPrice: json["unitPrice"],
     productImage: json["productImage"],
-    sellerName: sellerNameValues.map![json["sellerName"]],
+    sellerName: json["sellerName"],
     sellerProfilePhoto: json["sellerProfilePhoto"],
     sellerCoverPhoto: json["sellerCoverPhoto"],
-    ezShopName: ezShopNameValues.map![json["ezShopName"]],
+    shopName: json["ezShopName"],
     defaultPushScore: json["defaultPushScore"],
     myProductVarId: json["myProductVarId"],
   );
@@ -87,43 +87,12 @@ class NewArrivalsProductsResponse {
     "discountAmount": discountAmount,
     "unitPrice": unitPrice,
     "productImage": productImage,
-    "sellerName": sellerNameValues.reverse[sellerName],
+    "sellerName": sellerName,
     "sellerProfilePhoto": sellerProfilePhoto,
     "sellerCoverPhoto": sellerCoverPhoto,
-    "ezShopName": ezShopNameValues.reverse[ezShopName],
+    "ezShopName": shopName,
     "defaultPushScore": defaultPushScore,
     "myProductVarId": myProductVarId,
   };
 }
 
-enum EzShopName { PHOENIX_MART, GORGEOUSAND_BEAUTIFUL, DURONTOKIDS, AUVRAFASHION }
-
-final ezShopNameValues = EnumValues({
-  "auvrafashion": EzShopName.AUVRAFASHION,
-  "durontokids": EzShopName.DURONTOKIDS,
-  "GorgeousandBeautiful": EzShopName.GORGEOUSAND_BEAUTIFUL,
-  "PhoenixMart": EzShopName.PHOENIX_MART
-});
-
-enum SellerName { PHOENIX_MART, GORGEOUS_BEAUTIFUL, DURONTO_KIDS, AUVRA_FASHION }
-
-final sellerNameValues = EnumValues({
-  "Auvra Fashion": SellerName.AUVRA_FASHION,
-  "Duronto Kids": SellerName.DURONTO_KIDS,
-  "Gorgeous&Beautiful": SellerName.GORGEOUS_BEAUTIFUL,
-  "Phoenix Mart": SellerName.PHOENIX_MART
-});
-
-class EnumValues<T> {
-  Map<String, T>? map;
-  Map<T, String>? reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map?.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap!;
-  }
-}

@@ -10,7 +10,7 @@ class NewShopsResponse {
     this.sellerName,
     this.sellerProfilePhoto,
     this.sellerItemPhoto,
-    this.ezShopName,
+    this.shopName,
     this.defaultPushScore,
     this.aboutCompany,
     this.allowCod,
@@ -34,48 +34,48 @@ class NewShopsResponse {
   String? sellerName;
   String? sellerProfilePhoto;
   String? sellerItemPhoto;
-  String? ezShopName;
+  String? shopName;
   double? defaultPushScore;
   String? aboutCompany;
   int? allowCod;
   dynamic division;
   dynamic subDivision;
-  City? city;
-  State? state;
+  String? city;
+  String? state;
   String? zipcode;
-  Country? country;
-  CurrencyCode? currencyCode;
+  String? country;
+  String? currencyCode;
   int? orderQty;
   int? orderAmount;
   int? salesQty;
   int? salesAmount;
   int? highestDiscountPercent;
-  DateTime? lastAddToCart;
-  DateTime? lastAddToCartThatSold;
+  String? lastAddToCart;
+  String? lastAddToCartThatSold;
 
   factory NewShopsResponse.fromJson(Map<String, dynamic> json) => NewShopsResponse(
     slNo: json["slNo"],
     sellerName: json["sellerName"],
     sellerProfilePhoto: json["sellerProfilePhoto"],
     sellerItemPhoto: json["sellerItemPhoto"],
-    ezShopName: json["ezShopName"],
+    shopName: json["ezShopName"],
     defaultPushScore: json["defaultPushScore"].toDouble(),
     aboutCompany: json["aboutCompany"] == null ? null : json["aboutCompany"],
     allowCod: json["allowCOD"],
     division: json["division"],
     subDivision: json["subDivision"],
-    city: json["city"] == null ? null : cityValues.map![json["city"]],
-    state: json["state"] == null ? null : stateValues.map![json["state"]],
-    zipcode: json["zipcode"] == null ? null : json["zipcode"],
-    country: countryValues.map![json["country"]],
-    currencyCode: currencyCodeValues.map![json["currencyCode"]],
+    city: json["city"] ,
+    state: json["state"] ,
+    zipcode: json["zipcode"],
+    country: json["country"],
+    currencyCode: json["currencyCode"],
     orderQty: json["orderQty"],
     orderAmount: json["orderAmount"],
     salesQty: json["salesQty"],
     salesAmount: json["salesAmount"],
     highestDiscountPercent: json["highestDiscountPercent"],
-    lastAddToCart: DateTime.parse(json["lastAddToCart"]),
-    lastAddToCartThatSold: DateTime.parse(json["lastAddToCartThatSold"]),
+    lastAddToCart: json["lastAddToCart"],
+    lastAddToCartThatSold: json["lastAddToCartThatSold"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -83,66 +83,23 @@ class NewShopsResponse {
     "sellerName": sellerName,
     "sellerProfilePhoto": sellerProfilePhoto,
     "sellerItemPhoto": sellerItemPhoto,
-    "ezShopName": ezShopName,
+    "ezShopName": shopName,
     "defaultPushScore": defaultPushScore,
     "aboutCompany": aboutCompany == null ? null : aboutCompany,
     "allowCOD": allowCod,
     "division": division,
     "subDivision": subDivision,
-    "city": city == null ? null : cityValues.reverse[city],
-    "state": state == null ? null : stateValues.reverse[state],
-    "zipcode": zipcode == null ? null : zipcode,
-    "country": countryValues.reverse[country],
-    "currencyCode": currencyCodeValues.reverse[currencyCode],
+    "city": city ,
+    "state": state ,
+    "zipcode": zipcode ,
+    "country": country,
+    "currencyCode": currencyCode,
     "orderQty": orderQty,
     "orderAmount": orderAmount,
     "salesQty": salesQty,
     "salesAmount": salesAmount,
     "highestDiscountPercent": highestDiscountPercent,
-    "lastAddToCart": lastAddToCart?.toIso8601String(),
-    "lastAddToCartThatSold": lastAddToCartThatSold?.toIso8601String(),
+    "lastAddToCart": lastAddToCart,
+    "lastAddToCartThatSold": lastAddToCartThatSold,
   };
-}
-
-enum City { DHAKA, DHAKA_DISTRICT, EMPTY }
-
-final cityValues = EnumValues({
-  "Dhaka": City.DHAKA,
-  "Dhaka District": City.DHAKA_DISTRICT,
-  "ঢাকা জেলা": City.EMPTY
-});
-
-enum Country { BANGLADESH }
-
-final countryValues = EnumValues({
-  "Bangladesh": Country.BANGLADESH
-});
-
-enum CurrencyCode { BDT, CURRENCY_CODE_BDT }
-
-final currencyCodeValues = EnumValues({
-  "bdt": CurrencyCode.BDT,
-  "BDT": CurrencyCode.CURRENCY_CODE_BDT
-});
-
-enum State { DHAKA, DHAKA_DIVISION, EMPTY }
-
-final stateValues = EnumValues({
-  "Dhaka": State.DHAKA,
-  "Dhaka Division": State.DHAKA_DIVISION,
-  "ঢাকা বিভাগ": State.EMPTY
-});
-
-class EnumValues<T> {
-  Map<String, T>? map;
-  Map<T, String>? reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map?.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap!;
-  }
 }
