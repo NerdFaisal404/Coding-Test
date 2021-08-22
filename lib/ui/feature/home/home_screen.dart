@@ -7,10 +7,12 @@ import 'package:coding_test/data/models/trending_products_response.dart';
 import 'package:coding_test/data/repositories/repository.dart';
 import 'package:coding_test/di/dependency_injection.dart';
 import 'package:coding_test/ui/feature/home/widgets/item_product_widget.dart';
+import 'package:coding_test/ui/feature/home/widgets/new_arrivals_widget.dart';
 import 'package:coding_test/ui/feature/home/widgets/new_shops_widget.dart';
 import 'package:coding_test/ui/feature/home/widgets/trending_products_widget.dart';
 import 'package:coding_test/utils/colors.dart';
 import 'package:coding_test/utils/common_text_util.dart';
+import 'package:coding_test/utils/dimens.dart';
 import 'package:coding_test/utils/spacers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 VSpacer5(),
                 _trendingProduct(),
                 VSpacer5(),
+                _productsFirstThreeItems(),
+                VSpacer5(),
+                _newArrivalsProduct(),
+                VSpacer5(),
+                _productsSecondThreeItems(),
+                VSpacer5(),
+                _newShops(),
+                VSpacer5(),
                 _products(),
+                VSpacer5(),
               ],
             ),
           ),
@@ -183,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _products() {
+  Widget _productsFirstThreeItems() {
     return BlocProvider(
       create: (context) =>
           HomeBloc(locator<Repository>())..add(HomeStoriesProductsEvent()),
@@ -199,6 +210,199 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: List.generate(3, (index) {
+                    return ItemProductWidget(
+                      productsModel: productsList[index],
+                    );
+                  }),
+                ),
+              ),
+            );
+          }
+          return EmptyPage(
+            message: "Failed to load data from the server",
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _productsSecondThreeItems() {
+    return BlocProvider(
+      create: (context) =>
+          HomeBloc(locator<Repository>())..add(HomeStoriesProductsEvent()),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (ctx, state) {
+          if (state is HomeLoadingState) {
+            return LoadingPage();
+          } else if (state is NewProductsStoriesLoadedState) {
+            List<StoriesResponse> productsList = state.response;
+            return Container(
+              width: size!.width,
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(3, (index) {
+                    return ItemProductWidget(
+                      productsModel: productsList[3 + index],
+                    );
+                  }),
+                ),
+              ),
+            );
+          }
+          return EmptyPage(
+            message: "Failed to load data from the server",
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _newArrivalsProduct() {
+    return BlocProvider(
+      create: (context) =>
+          HomeBloc(locator<Repository>())..add(HomeNewArrivalEvent()),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (ctx, state) {
+          if (state is HomeLoadingState) {
+            return LoadingPage();
+          } else if (state is NewArrivalsProductsLoadedState) {
+            List<NewArrivalsProductsResponse> newArrivalList = state.response;
+            return Container(
+                width: size!.width,
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 15,
+                        offset: Offset(0.0, 3),
+                      ),
+                    ],
+                  ),
+                  width: size!.width,
+                  child: Card(
+                    elevation: 2,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: dp6),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: dp4),
+                            child: CommonTextUtil(
+                              text: "New Arrivals",
+                              fontWeight: FontWeight.w600,
+                              fontSize: dp16,
+                              color: black,
+                              isCentre: false,
+                            ),
+                          ),
+                          SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: List.generate(
+                                  newArrivalList.length,
+                                  (index) => NewArrivalsWidget(
+                                      newArrivalsProduct:
+                                          newArrivalList[index]),
+                                ),
+                              )),
+                        ],
+                      ),
+                    ),
+                  ),
+                ));
+          }
+          return EmptyPage(
+            message: "Failed to load data from the server",
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _newShops() {
+    return BlocProvider(
+      create: (context) =>
+          HomeBloc(locator<Repository>())..add(HomeShopEvent()),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (ctx, state) {
+          if (state is HomeLoadingState) {
+            return LoadingPage();
+          } else if (state is NewShopLoadedState) {
+            List<NewShopsResponse> newShopList = state.response;
+            return Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 15,
+                    offset: Offset(0.0, 3),
+                  ),
+                ],
+              ),
+              width: size!.width,
+              child: Card(
+                elevation: 2,
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: dp6),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: dp4),
+                        child: CommonTextUtil(
+                          text: "New Shops",
+                          fontWeight: FontWeight.w600,
+                          fontSize: dp16,
+                          color: black,
+                          isCentre: false,
+                        ),
+                      ),
+                      SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(
+                              newShopList.length,
+                              (index) => NewShopsWidget(
+                                  newShopsData: newShopList[index]),
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+          return EmptyPage(
+            message: "Failed to load data from the server",
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _products() {
+    return BlocProvider(
+      create: (context) =>
+          HomeBloc(locator<Repository>())..add(HomeStoriesProductsEvent()),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (ctx, state) {
+          if (state is HomeLoadingState) {
+            return LoadingPage();
+          } else if (state is NewProductsStoriesLoadedState) {
+            List<StoriesResponse> productsList = state.response;
+            return Container(
+              width: size!.width,
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(productsList.length, (index) {
                     return ItemProductWidget(
                       productsModel: productsList[index],
                     );
