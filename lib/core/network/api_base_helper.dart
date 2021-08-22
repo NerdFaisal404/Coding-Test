@@ -18,7 +18,7 @@ class ApiBaseHelper {
       // make the network call
       final response = await dioFactory?.getDio().get(
             NetworkConstants.BASE_URL + endUrl,
-            options: buildCacheOptions(Duration(days: 7)),
+          options: buildServiceCacheOptions(forceRefresh: false)
           );
       //return the response
       return _returnResponse(response!);
