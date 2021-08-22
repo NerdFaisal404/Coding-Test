@@ -5,11 +5,30 @@ abstract class HomeEvent {
 
 }
 
-class HomeTrendingEvent extends HomeEvent{
+class HomeTrendingProductEvent extends HomeEvent{
   @override
   List<Object> get props => [];
 
 }
+
+class HomeShopEvent extends HomeEvent{
+  @override
+  List<Object> get props => [];
+
+}
+
+class HomeTrendingSellersEvent extends HomeEvent{
+  @override
+  List<Object> get props => [];
+
+}
+
+class HomeStoriesProductsEvent extends HomeEvent{
+  @override
+  List<Object> get props => [];
+
+}
+
 
 class HomeNewArrivalEvent extends HomeEvent{
   @override

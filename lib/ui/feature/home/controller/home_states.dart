@@ -1,4 +1,6 @@
 import 'package:coding_test/data/models/new_arrivals_products_response.dart';
+import 'package:coding_test/data/models/new_shops_response.dart';
+import 'package:coding_test/data/models/stories_response.dart';
 import 'package:coding_test/data/models/trending_products_response.dart';
 import 'package:equatable/equatable.dart';
 
@@ -9,11 +11,21 @@ class HomeLoadingState extends HomeState{
   List<Object> get props => [];
 }
 
-class TrendingLoadedState extends HomeState{
+class TrendingProductsLoadedState extends HomeState{
 
   final List<TrendingProductsResponse> response;
 
-  TrendingLoadedState(this.response);
+  TrendingProductsLoadedState(this.response);
+
+  @override
+  List<Object> get props => [response];
+}
+
+class NewShopLoadedState extends HomeState{
+
+  final List<NewShopsResponse> response;
+
+  NewShopLoadedState(this.response);
 
   @override
   List<Object> get props => [response];
@@ -24,6 +36,16 @@ class NewArrivalsProductsLoadedState extends HomeState{
   final List<NewArrivalsProductsResponse> response;
 
   NewArrivalsProductsLoadedState(this.response);
+
+  @override
+  List<Object> get props => [response];
+}
+
+class NewProductsStoriesLoadedState extends HomeState{
+
+  final List<StoriesResponse> response;
+
+  NewProductsStoriesLoadedState(this.response);
 
   @override
   List<Object> get props => [response];

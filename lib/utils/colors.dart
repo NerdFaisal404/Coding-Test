@@ -6,6 +6,7 @@ const material_orange = Color(0xffff6d00);
 const material_white = Color(0xfffafafa);
 const black_5 = Color(0xff424242);
 const white = Color(0xffffffff);
+const greyDark = Color(0xff737373);
 const accent = Color(0xffff6d00);
 const colorF9500A = Color(0xffF9500A);
 const light_grey = Color(0xffe0e0e0);

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:coding_test/core/network/api_base_helper.dart';
 import 'package:coding_test/data/models/new_arrivals_products_response.dart';
+import 'package:coding_test/data/models/new_shops_response.dart';
 import 'package:coding_test/data/models/stories_response.dart';
 import 'package:coding_test/data/models/trending_products_response.dart';
 import 'package:coding_test/data/models/trending_seller_response.dart';
@@ -39,5 +40,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     var response = await helper.get(NetworkConstants.TRENDING_SELLER);
     final responseData = json.encode(response.data);
     return trendingSellerResponseFromJson(responseData).first;
+  }
+
+  @override
+  Future<List<NewShopsResponse>> getNewShops() async{
+    var response = await helper.get(NetworkConstants.NEW_SHOPS);
+    final responseData = json.encode(response.data);
+    return newShopsResponseFromJson(responseData).first;
   }
 }

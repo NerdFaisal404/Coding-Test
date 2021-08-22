@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:coding_test/core/network/network_info.dart';
 import 'package:coding_test/data/datasources/remote_datasource/remote_datasource.dart';
 import 'package:coding_test/data/models/new_arrivals_products_response.dart';
+import 'package:coding_test/data/models/new_shops_response.dart';
 import 'package:coding_test/data/models/stories_response.dart';
 import 'package:coding_test/data/models/trending_products_response.dart';
 import 'package:coding_test/data/models/trending_seller_response.dart';
@@ -21,8 +22,7 @@ class RepositoryImpl extends Repository {
 
   @override
   Future<List<StoriesResponse>> getStories() {
-    // TODO: implement getStories
-    throw UnimplementedError();
+    return remoteDataSource.getStories();
   }
 
   @override
@@ -32,7 +32,11 @@ class RepositoryImpl extends Repository {
 
   @override
   Future<List<TrendingSellerResponse>> getTrendingSellers() {
-    // TODO: implement getTrendingSellers
-    throw UnimplementedError();
+    return remoteDataSource.getTrendingSellers();
+  }
+
+  @override
+  Future<List<NewShopsResponse>> getNewShops() {
+    return remoteDataSource.getNewShops();
   }
 }

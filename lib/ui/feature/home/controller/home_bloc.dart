@@ -14,14 +14,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> mapEventToState(
     HomeEvent event,
   ) async* {
-    if (event is HomeTrendingEvent) {
+    if (event is HomeTrendingProductEvent) {
       yield HomeLoadingState();
       final trendingResponse = await _repository.getTrendingProducts();
-      yield TrendingLoadedState(trendingResponse);
+      yield TrendingProductsLoadedState(trendingResponse);
     }else if (event is HomeNewArrivalEvent) {
       yield HomeLoadingState();
       final homeArrivalResponse = await _repository.getNewArrivalProducts();
       yield NewArrivalsProductsLoadedState(homeArrivalResponse);
+    }else if (event is HomeShopEvent) {
+      yield HomeLoadingState();
+      final homeNewShopResponse = await _repository.getNewShops();
+      yield NewShopLoadedState(homeNewShopResponse);
     }
   }
 }
