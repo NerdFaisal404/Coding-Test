@@ -2,9 +2,11 @@ import 'package:coding_test/core/pages/empty_page.dart';
 import 'package:coding_test/core/pages/loading_pge.dart';
 import 'package:coding_test/data/models/new_arrivals_products_response.dart';
 import 'package:coding_test/data/models/new_shops_response.dart';
+import 'package:coding_test/data/models/stories_response.dart';
 import 'package:coding_test/data/models/trending_products_response.dart';
 import 'package:coding_test/data/repositories/repository.dart';
 import 'package:coding_test/di/dependency_injection.dart';
+import 'package:coding_test/ui/feature/home/widgets/item_product_widget.dart';
 import 'package:coding_test/ui/feature/home/widgets/new_shops_widget.dart';
 import 'package:coding_test/ui/feature/home/widgets/trending_products_widget.dart';
 import 'package:coding_test/utils/colors.dart';
@@ -25,9 +27,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Size? size;
+
   @override
   Widget build(BuildContext context) {
-     size = MediaQuery.of(context).size;
+    size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -35,18 +38,83 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text("EcomHunt"),
       ),
       body: SafeArea(
-        child: Container(
-          width: size!.width,
-          child: ListView(
-            children: [
-              _newShops(),
-              VSpacer5(),
-              _trendingProduct(),
-
-
-            ],
+        child: SingleChildScrollView(
+          child: Container(
+            width: size!.width,
+            child: Column(
+              children: [
+                _trendingSellers(),
+                VSpacer5(),
+                _trendingProduct(),
+                VSpacer5(),
+                _products(),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _trendingSellers() {
+    return BlocProvider(
+      create: (context) =>
+          HomeBloc(locator<Repository>())..add(HomeShopEvent()),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (ctx, state) {
+          if (state is HomeLoadingState) {
+            return LoadingPage();
+          } else if (state is NewShopLoadedState) {
+            List<NewShopsResponse> newShopList = state.response;
+            return Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 15,
+                    offset: Offset(0.0, 3),
+                  ),
+                ],
+              ),
+              width: size!.width,
+              child: Card(
+                elevation: 2,
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 6),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 4.0),
+                        child: CommonTextUtil(
+                          text: "Trending Sellers",
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: black,
+                          isCentre: false,
+                        ),
+                      ),
+                      SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(
+                              newShopList.length,
+                              (index) => NewShopsWidget(
+                                  newShopsData: newShopList[index]),
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+          return EmptyPage(
+            message: "Failed to load data from the server",
+          );
+        },
       ),
     );
   }
@@ -60,14 +128,15 @@ class _HomeScreenState extends State<HomeScreen> {
           if (state is HomeLoadingState) {
             return LoadingPage();
           } else if (state is TrendingProductsLoadedState) {
-            List<TrendingProductsResponse> trendingProductsList = state.response;
+            List<TrendingProductsResponse> trendingProductsList =
+                state.response;
             return Container(
               width: size!.width,
               margin: const EdgeInsets.all(5),
               padding: const EdgeInsets.only(
                 left: 5,
-                 bottom: 5,
-                 top: 5,
+                bottom: 5,
+                top: 5,
               ),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -113,58 +182,27 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  Widget _newShops() {
+
+  Widget _products() {
     return BlocProvider(
       create: (context) =>
-      HomeBloc(locator<Repository>())..add(HomeShopEvent()),
+          HomeBloc(locator<Repository>())..add(HomeStoriesProductsEvent()),
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (ctx, state) {
           if (state is HomeLoadingState) {
             return LoadingPage();
-          } else if (state is NewShopLoadedState) {
-            List<NewShopsResponse> newShopList = state.response;
-            return  Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 15,
-                    offset: Offset(0.0, 3),
-                  ),
-                ],
-              ),
+          } else if (state is NewProductsStoriesLoadedState) {
+            List<StoriesResponse> productsList = state.response;
+            return Container(
               width: size!.width,
-              child: Card(
-                elevation: 2,
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 6),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 4.0),
-                        child: CommonTextUtil(
-                          text: "Trending Sellers",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          color: black,
-                          isCentre: false,
-                        ),
-                      ),
-                      SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            children: List.generate(
-                              newShopList.length,
-                                  (index) => NewShopsWidget(
-                                  newShopsData: newShopList[index]),
-                            ),
-                          )),
-                    ],
-                  ),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(3, (index) {
+                    return ItemProductWidget(
+                      productsModel: productsList[index],
+                    );
+                  }),
                 ),
               ),
             );

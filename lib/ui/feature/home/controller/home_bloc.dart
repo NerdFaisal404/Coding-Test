@@ -26,6 +26,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield HomeLoadingState();
       final homeNewShopResponse = await _repository.getNewShops();
       yield NewShopLoadedState(homeNewShopResponse);
+    } else if (event is HomeStoriesProductsEvent) {
+      yield HomeLoadingState();
+      final homeNewShopResponse = await _repository.getStories();
+      yield NewProductsStoriesLoadedState(homeNewShopResponse);
     }
   }
 }
