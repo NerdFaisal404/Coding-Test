@@ -7,7 +7,6 @@ import 'package:coding_test/data/models/stories_response.dart';
 import 'package:coding_test/data/models/trending_products_response.dart';
 import 'package:coding_test/data/models/trending_seller_response.dart';
 import 'package:coding_test/data/repositories/repository.dart';
-import 'package:flutter/material.dart';
 
 class RepositoryImpl extends Repository {
   final RemoteDataSource remoteDataSource;
@@ -16,23 +15,23 @@ class RepositoryImpl extends Repository {
   RepositoryImpl({required this.remoteDataSource, required this.networkInfo});
 
   @override
-  Future<NewArrivalsProductsResponse> getNewArrivalProducts() {
+  Future<List<NewArrivalsProductsResponse>> getNewArrivalProducts() {
     return remoteDataSource.getNewArrivalProducts();
   }
 
   @override
-  Future<StoriesResponse> getStories() {
+  Future<List<StoriesResponse>> getStories() {
     // TODO: implement getStories
     throw UnimplementedError();
   }
 
   @override
-  Future<TrendingProductsResponse> getTrendingProducts() {
+  Future<List<TrendingProductsResponse>> getTrendingProducts() {
     return remoteDataSource.getTrendingProducts();
   }
 
   @override
-  Future<TrendingSellerResponse> getTrendingSellers() {
+  Future<List<TrendingSellerResponse>> getTrendingSellers() {
     // TODO: implement getTrendingSellers
     throw UnimplementedError();
   }

@@ -8,8 +8,8 @@ import 'package:coding_test/data/models/trending_seller_response.dart';
 
 
 abstract class Repository {
-  Future<TrendingSellerResponse> getTrendingSellers();
-  Future<TrendingProductsResponse> getTrendingProducts();
-  Future<NewArrivalsProductsResponse> getNewArrivalProducts();
-  Future<StoriesResponse> getStories();
+  Future<List<TrendingSellerResponse>> getTrendingSellers();
+  Future<List<TrendingProductsResponse>> getTrendingProducts();
+  Future<List<NewArrivalsProductsResponse>> getNewArrivalProducts();
+  Future<List<StoriesResponse>> getStories();
 }

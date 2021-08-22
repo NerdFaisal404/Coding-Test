@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:coding_test/utils/constant/constant.dart';
+import 'package:coding_test/utils/constant.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flutter/cupertino.dart';

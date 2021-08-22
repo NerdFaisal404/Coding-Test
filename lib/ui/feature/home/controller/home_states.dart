@@ -1,6 +1,5 @@
 import 'package:coding_test/data/models/new_arrivals_products_response.dart';
 import 'package:coding_test/data/models/trending_products_response.dart';
-import 'package:coding_test/data/models/trending_seller_response.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomeState extends Equatable{}
@@ -12,7 +11,7 @@ class HomeLoadingState extends HomeState{
 
 class TrendingLoadedState extends HomeState{
 
-  final TrendingProductsResponse response;
+  final List<TrendingProductsResponse> response;
 
   TrendingLoadedState(this.response);
 
@@ -22,7 +21,7 @@ class TrendingLoadedState extends HomeState{
 
 class NewArrivalsProductsLoadedState extends HomeState{
 
-  final NewArrivalsProductsResponse response;
+  final List<NewArrivalsProductsResponse> response;
 
   NewArrivalsProductsLoadedState(this.response);
 
